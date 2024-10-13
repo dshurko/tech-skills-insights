@@ -1,1 +1,1 @@
-# it-jobs-analytics
+# tech-skills-insights
