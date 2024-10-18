@@ -1,0 +1,7 @@
+beautifulsoup4
+black
+flake8
+html2text
+isort
+mypy
+requests
