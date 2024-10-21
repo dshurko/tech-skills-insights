@@ -1,10 +1,9 @@
-version: '3.8'
-
 x-airflow-common:
   &airflow-common
   build:
     context: ./docker/airflow
   environment:
+    &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CORE__FERNET_KEY: "${AIRFLOW_FERNET_KEY}"
@@ -19,7 +18,7 @@ x-airflow-common:
     - ./tech_skills_insights:/opt/airflow/tech_skills_insights
     - ./logs:/opt/airflow/logs
     - ./tests:/opt/airflow/tests
-  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
+  user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     postgres:
       condition: service_healthy
@@ -56,6 +55,7 @@ services:
     volumes:
       - ./data/minio:/data
     command: server --console-address ":9001" /data
+    restart: unless-stopped
 
   airflow-webserver:
     <<: *airflow-common
@@ -94,6 +94,7 @@ services:
     container_name: airflow-init
     command: db init
     environment:
+      <<: *airflow-common-env
       _AIRFLOW_DB_MIGRATE: "true"
       _AIRFLOW_WWW_USER_CREATE: "true"
       _AIRFLOW_WWW_USER_USERNAME: "${_AIRFLOW_WWW_USER_USERNAME:-airflow}"
