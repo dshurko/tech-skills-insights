@@ -1,7 +1,7 @@
 djinni:
-  - .NET
+  - .NET # C# / .NET
   - Android
-  - C++
+  - C++ # C / C++ / Embedded
   - Data Engineer
   - Data Science
   - DevOps
@@ -9,7 +9,7 @@ djinni:
   - Fullstack
   - Golang
   - Java
-  - JavaScript
+  - JavaScript # JavaScript / Front-End
   - Kotlin
   - Node.js
   - PHP
