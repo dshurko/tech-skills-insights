@@ -9,16 +9,19 @@ from tech_skills_insights.models import RawJob
 class DjinniJobSource(BaseJobSource):
     BASE_API_URL = "https://djinni.co/api/jobs/"
 
-    def _retrieve_category_jobs_in_date_range(
-        self, category: str, start_date: date, end_date: date
-    ) -> list[RawJob]:
+    def __init__(
+        self, category: str, category_url_part: str, start_date: date, end_date: date
+    ):
+        super().__init__(category, category_url_part, start_date, end_date)
+
+    def retrieve_jobs(self) -> list[RawJob]:
         jobs = []
         offset = 0
 
         while True:
             response = requests.get(
                 self.BASE_API_URL,
-                params={"category": category, "offset": offset},
+                params={"category": self.category_url_part, "offset": offset},
             )
             response.raise_for_status()
             data = response.json()
@@ -27,16 +30,16 @@ class DjinniJobSource(BaseJobSource):
             for job_data in job_results:
                 published_at = datetime.fromisoformat(job_data["published"]).date()
 
-                if published_at < start_date:
+                if published_at < self.start_date:
                     return jobs
 
-                if start_date <= published_at <= end_date:
+                if self.start_date <= published_at <= self.end_date:
                     jobs.append(
                         RawJob(
                             id=job_data["id"],
                             title=job_data["title"],
                             company=job_data["company_name"],
-                            category=category,
+                            category=self.category,
                             description=self._convert_html_to_text(
                                 job_data["long_description"]
                             ),

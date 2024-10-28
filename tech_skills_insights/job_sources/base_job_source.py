@@ -1,6 +1,5 @@
 import re
 from abc import ABC, abstractmethod
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 
 import html2text
@@ -14,37 +13,16 @@ class BaseJobSource(ABC):
     ESCAPED_CHAR_PATTERN = re.compile(r"^\\", re.MULTILINE)
     LEADING_HASH_PATTERN = re.compile(r"^#+\s?", re.MULTILINE)
 
-    def __init__(self, category_to_url: dict[str, str]):
-        self.category_to_url = category_to_url
-
-    def retrieve_jobs_in_date_range(
-        self, start_date: date, end_date: date
-    ) -> list[RawJob]:
-        jobs = []
-        with ThreadPoolExecutor() as executor:
-            category_futures = {
-                executor.submit(
-                    self._retrieve_category_jobs_in_date_range,
-                    category,
-                    start_date,
-                    end_date,
-                ): category
-                for category in self.category_to_url
-            }
-
-            for future in as_completed(category_futures):
-                try:
-                    jobs.extend(future.result())
-                except Exception as e:
-                    category = category_futures[future]
-                    print(f"Error fetching jobs for '{category}': {e}")
-
-        return jobs
+    def __init__(
+        self, category: str, category_url_part: str, start_date: date, end_date: date
+    ):
+        self.category = category
+        self.category_url_part = category_url_part
+        self.start_date = start_date
+        self.end_date = end_date
 
     @abstractmethod
-    def _retrieve_category_jobs_in_date_range(
-        self, category: str, start_date: date, end_date: date
-    ) -> list[RawJob]:
+    def retrieve_jobs(self) -> list[RawJob]:
         pass
 
     def _convert_html_to_text(self, html_content: str) -> str:
