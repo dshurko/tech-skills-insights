@@ -24,7 +24,10 @@ class BaseJobSource(ABC):
         with ThreadPoolExecutor() as executor:
             category_futures = {
                 executor.submit(
-                    self.retrieve_category_jobs, category, start_date, end_date
+                    self._retrieve_category_jobs_in_date_range,
+                    category,
+                    start_date,
+                    end_date,
                 ): category
                 for category in self.category_to_url
             }
@@ -39,12 +42,12 @@ class BaseJobSource(ABC):
         return jobs
 
     @abstractmethod
-    def retrieve_category_jobs(
+    def _retrieve_category_jobs_in_date_range(
         self, category: str, start_date: date, end_date: date
     ) -> list[RawJob]:
         pass
 
-    def convert_html_to_text(self, html_content: str) -> str:
+    def _convert_html_to_text(self, html_content: str) -> str:
         parser = html2text.HTML2Text()
         parser.body_width = 0
         parser.ignore_emphasis = True

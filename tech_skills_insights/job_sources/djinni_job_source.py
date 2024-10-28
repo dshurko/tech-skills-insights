@@ -9,7 +9,7 @@ from tech_skills_insights.models import RawJob
 class DjinniJobSource(BaseJobSource):
     BASE_API_URL = "https://djinni.co/api/jobs/"
 
-    def retrieve_category_jobs(
+    def _retrieve_category_jobs_in_date_range(
         self, category: str, start_date: date, end_date: date
     ) -> list[RawJob]:
         jobs = []
@@ -36,7 +36,7 @@ class DjinniJobSource(BaseJobSource):
                             title=job_data["title"],
                             company=job_data["company_name"],
                             category=category,
-                            description=self.convert_html_to_text(
+                            description=self._convert_html_to_text(
                                 job_data["long_description"]
                             ),
                             published_at=published_at,
