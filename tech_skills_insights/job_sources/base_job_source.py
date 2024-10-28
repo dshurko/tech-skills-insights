@@ -13,11 +13,8 @@ class BaseJobSource(ABC):
     ESCAPED_CHAR_PATTERN = re.compile(r"^\\", re.MULTILINE)
     LEADING_HASH_PATTERN = re.compile(r"^#+\s?", re.MULTILINE)
 
-    def __init__(
-        self, category: str, category_url_part: str, start_date: date, end_date: date
-    ):
+    def __init__(self, category: str, start_date: date, end_date: date):
         self.category = category
-        self.category_url_part = category_url_part
         self.start_date = start_date
         self.end_date = end_date
 

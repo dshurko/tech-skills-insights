@@ -9,10 +9,8 @@ from tech_skills_insights.models import RawJob
 class DjinniJobSource(BaseJobSource):
     BASE_API_URL = "https://djinni.co/api/jobs/"
 
-    def __init__(
-        self, category: str, category_url_part: str, start_date: date, end_date: date
-    ):
-        super().__init__(category, category_url_part, start_date, end_date)
+    def __init__(self, category: str, start_date: date, end_date: date):
+        super().__init__(category, start_date, end_date)
 
     def retrieve_jobs(self) -> list[RawJob]:
         jobs = []
@@ -20,8 +18,7 @@ class DjinniJobSource(BaseJobSource):
 
         while True:
             response = requests.get(
-                self.BASE_API_URL,
-                params={"category": self.category_url_part, "offset": offset},
+                self.BASE_API_URL, params={"category": self.category, "offset": offset}
             )
             response.raise_for_status()
             data = response.json()
