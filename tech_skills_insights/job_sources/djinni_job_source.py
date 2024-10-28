@@ -33,6 +33,7 @@ class DjinniJobSource(BaseJobSource):
                 if start_date <= published_at <= end_date:
                     jobs.append(
                         RawJob(
+                            id=job_data["id"],
                             title=job_data["title"],
                             company=job_data["company_name"],
                             category=category,

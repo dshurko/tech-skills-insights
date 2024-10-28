@@ -4,6 +4,7 @@ from datetime import date
 
 @dataclass
 class RawJob:
+    id: int
     title: str
     company: str
     category: str
