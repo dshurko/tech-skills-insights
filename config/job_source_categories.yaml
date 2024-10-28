@@ -1,0 +1,45 @@
+djinni:
+  Android: Android
+  C / C++ / Embedded: C%2B%2B
+  C# / .NET: .NET
+  Data Engineer: Data+Engineer
+  Data Science: Data+Science
+  DevOps: DevOps
+  Flutter: Flutter
+  Fullstack: Fullstack
+  Golang: Golang
+  Java: Java
+  JavaScript / Front-End: JavaScript
+  Kotlin: Kotlin
+  Node.js: Node.js
+  PHP: PHP
+  Python: Python
+  React Native: React+Native
+  Ruby: Ruby
+  Rust: Rust
+  Scala: Scala
+  iOS: iOS
+
+dou:
+  .NET: .NET
+  AI/ML: AI/ML
+  Android: Android
+  Big Data: Big Data
+  Blockchain: Blockchain
+  C++: C%2B%2B
+  Data Engineer: Data Engineer
+  Data Science: Data Science
+  DevOps: DevOps
+  Embedded: Embedded
+  Flutter: Flutter
+  Front End: Front End
+  Golang: Golang
+  Java: Java
+  Node.js: Node.js
+  PHP: PHP
+  Python: Python
+  React Native: React Native
+  Ruby: Ruby
+  Rust: Rust
+  Scala: Scala
+  iOS/macOS: iOS/macOS
