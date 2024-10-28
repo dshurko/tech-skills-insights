@@ -54,7 +54,7 @@ class BaseJobSource(ABC):
         parser.ignore_links = True
 
         text_content = parser.handle(html_content)
-        text_content = self.NEWLINES_PATTERN.sub("\n", text_content).strip()
+        text_content = self.NEWLINES_PATTERN.sub("\n", text_content)
         text_content = self.WHITESPACE_PATTERN.sub("", text_content)
         text_content = self.ESCAPED_CHAR_PATTERN.sub("", text_content)
         text_content = self.LEADING_HASH_PATTERN.sub("", text_content)
